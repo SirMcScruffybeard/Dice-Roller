@@ -1,6 +1,12 @@
 package com.sirmcscruffybeard.diceroller.dice;
 
+import java.beans.EventHandler;
 import java.util.Random;
+
+import com.sirmcscruffybeard.diceroller.Terminal;
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 public enum DICE implements BlankDice {
 
@@ -10,7 +16,11 @@ public enum DICE implements BlankDice {
 	
 	private int sides = 0;
 	
+	private double width = 85.0;
+	
 	Random roller = null;
+	
+	Button button = null;
 	
 	DICE(int inSides, String inName) {
 		
@@ -57,4 +67,45 @@ public enum DICE implements BlankDice {
 		return result;
 	}
 	
+	private Button prepButton() {
+		
+		this.button = new Button(this.getName());
+		
+		this.setWidth(width);
+		
+		this.button.setOnAction(new RollHandeler(this));
+		
+		return button;
+	}
+	
+	public Button getButton() {
+		
+		return this.prepButton();
+	}
+	
+	public void setWidth(double inWidth) {
+		
+		this.width = inWidth;
+		
+		this.button.setPrefWidth(width);
+	}
+	
+	private class RollHandeler implements javafx.event.EventHandler<ActionEvent> {
+
+		DICE dice = null;
+		
+		public RollHandeler(DICE inDice) {
+			
+			this.dice = inDice;
+		}
+		
+		@Override
+		public void handle(ActionEvent event) {
+			
+			new Terminal().display(dice.roll());
+			
+		}
+		
+		
+	}
 }
