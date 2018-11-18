@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application {
 	
+	final String APP_TITLE = "Dice Roller";
+	
 	private BorderPane mainPane = null;
 	
 	private VBox buttonBox = null;
@@ -21,7 +23,7 @@ public class MainWindow extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-		
+		primaryStage.setTitle(APP_TITLE);
 		
 		primaryStage.setScene(new Scene(this.prepMainPane()));
 		
