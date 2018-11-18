@@ -1,9 +1,9 @@
 package com.sirmcscruffybeard.diceroller.dice;
 
-import java.beans.EventHandler;
-import java.util.Random;
+//import com.sirmcscruffybeard.diceroller.TerminalKt;
+import com.sirmcscruffybeard.diceroller.gui.Result;
 
-import com.sirmcscruffybeard.diceroller.Terminal;
+import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -16,11 +16,13 @@ public enum DICE implements BlankDice {
 	
 	private int sides = 0;
 	
-	private double width = 85.0;
+	private double width = 85.0, addHeight = 45.0;
 	
-	Random roller = null;
+	private Random roller = null;
 	
-	Button button = null;
+	private Button button = null;
+	
+	private Result result = null;
 	
 	DICE(int inSides, String inName) {
 		
@@ -56,6 +58,11 @@ public enum DICE implements BlankDice {
 
 		return this.name;
 	}
+	
+	public void setResultArea(Result inResult) {
+		
+		this.result = inResult;
+	}
 
 	@Override
 	public int roll() {
@@ -73,7 +80,9 @@ public enum DICE implements BlankDice {
 		
 		this.setWidth(width);
 		
-		this.button.setOnAction(new RollHandeler(this));
+		this.setHeight(button.getHeight() + this.addHeight);
+		
+		this.button.setOnAction(new RollHandeler(this, this.result));
 		
 		return button;
 	}
@@ -87,22 +96,35 @@ public enum DICE implements BlankDice {
 		
 		this.width = inWidth;
 		
-		this.button.setPrefWidth(width);
+		this.button.setMinWidth(width);
+	}
+	
+	public void setHeight(double inHeight ) {
+		
+		this.button.setMinHeight(inHeight);
 	}
 	
 	private class RollHandeler implements javafx.event.EventHandler<ActionEvent> {
 
 		DICE dice = null;
 		
-		public RollHandeler(DICE inDice) {
+		Result result = null;
+		
+		public RollHandeler(DICE inDice, Result inArea) {
 			
 			this.dice = inDice;
+			
+			this.result = inArea;
 		}
 		
 		@Override
 		public void handle(ActionEvent event) {
 			
-			new Terminal().display(dice.roll());
+			//new com.sirmcscruffybeard.diceroller.Terminal();
+			
+			//TerminalKt.display(dice.roll());
+			
+			result.setResult(String.valueOf(dice.roll()));
 			
 		}
 		
