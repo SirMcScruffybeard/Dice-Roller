@@ -29,8 +29,6 @@ public enum DICE implements BlankDice {
 		this.setSides(inSides);
 		
 		this.setName(inName);
-		
-		this.roller = new Random();
 	}
 	
 
@@ -67,9 +65,17 @@ public enum DICE implements BlankDice {
 	@Override
 	public int roll() {
 		
+		long seed = 0;
+		
 		int result = 0;
-
-		while(result == 0) result = this.roller.nextInt(this.getSides()+1);
+		
+		long waitTime = 100;
+		
+		seed = new Random().nextLong();
+		
+		Random roller = new Random(seed);
+		
+		while(result == 0) result = roller.nextInt(this.getSides()+1);
 		
 		return result;
 	}
