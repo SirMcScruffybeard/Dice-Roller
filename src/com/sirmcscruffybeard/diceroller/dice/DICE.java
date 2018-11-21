@@ -17,9 +17,7 @@ public enum DICE implements BlankDice {
 	private int sides = 0;
 	
 	private double width = 85.0, addHeight = 45.0;
-	
-	private Random roller = null;
-	
+		
 	private Button button = null;
 	
 	private Result result = null;
@@ -68,8 +66,6 @@ public enum DICE implements BlankDice {
 		long seed = 0;
 		
 		int result = 0;
-		
-		long waitTime = 100;
 		
 		seed = new Random().nextLong();
 		
